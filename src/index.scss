@@ -34,14 +34,92 @@ body {
     width: 100%;
     color: $dark;
     background: #fff;
+    &__content {
+        display: block;
+        width: auto;
+        max-width: calc(100% - 40px);
+        box-shadow: $shadow;
+    }
 }
 
 .city {
+    padding: 50px;
+    &__content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-flow: row wrap;
+        min-width: 600px;
+    }
+    &__column {
+        &:first-child {
+            flex: 0 0 calc(100% - 200px);
+        }
+        &:last-child {
+            flex: 0 0 180px;
+            text-align: center;
+        }
+    }
     &__name {
-        font-size: 2.8rem;
+        position: relative;
+        font-size: 5.8rem;
         font-weight: 700;
         line-height: 1;
         margin: 0 0 20px 0;
+        &::after {
+            content: '';
+            display: block;
+            width: 150px;
+            height: 4px;
+            margin-top: 10px;
+            background: $dark;
+        }
+    }
+    &__weather {
+        font-size: 2.4rem;
+        margin: 0 0 10px 0;
+        &--temp {
+            margin-right: 10px;
+            padding-right: 10px;
+            border-right: 1px solid #d9d9d9;
+        }
+        &--name {
+            margin-right: 5px;
+        }
+        &--description {
+            color: $accent;
+        }
+    }
+    &__details {
+        margin-top: 30px;
+        &__row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-flow: row wrap;
+            padding: 10px 0;
+            border-top: 1px solid #ebebeb;
+            &:last-child {
+                padding: 10px 0 0 0;
+            }
+            span {
+                font-size: 1.8rem;
+                line-height: 1;
+                &:first-child {
+                    font-weight: 500;                    
+                }
+                &:last-child {
+                    font-weight: 600;
+                    small {
+                        display: inline-block;
+                        margin-left: 3px;
+                        font-size: 1.2rem;
+                        font-weight: 400;
+                        color: #7a7a7a;
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -97,5 +175,12 @@ body {
         &:hover {
             background-size: 24px;
         }
+    }
+    &--details {
+        height: 54px;
+        padding: 0 50px;
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin-top: 30px;
     }
 }

@@ -10,7 +10,8 @@ export default class City extends Component {
             city: props.city,
             weather: undefined,
             fetched: false,
-            processing: true
+            processing: true,
+            details: false
         }
     }
 
@@ -79,14 +80,28 @@ export default class City extends Component {
                 {!this.state.fetched
                     ?   <div className="city__loading"><Loading /></div>
                     :   <div className="city__content">
-                            <h1 className="city__name">{this.state.city}</h1>
-                            <div className="city__weather">
-                                <h2 className="city__weather--name">{this.state.weather.name}</h2>
-                                <p className="city__weather--description">{this.state.weather.description}</p>
+                            <div className="city__column">
+                                <h1 className="city__name">{this.state.city}</h1>
+                                <div className="city__weather">
+                                    <p><span className="city__weather--temp">{this.state.weather.temp}°C</span><span className="city__weather--name">{this.state.weather.name}</span><span className="city__weather--description">({this.state.weather.description})</span></p>
+                                </div>
+                                {!this.state.details
+                                    ?   <button className="btn btn--large btn--details" onClick={e => this.setState({ details: true })}>Show details</button>
+                                    :   <div className="city__details">
+                                            <p class="city__details__row">
+                                                <span>Pressure</span><span>{this.state.weather.pressure}<small>hPa</small></span>
+                                            </p>
+                                            <p class="city__details__row">
+                                                <span>Humidity</span><span>{this.state.weather.humidity}<small>%</small></span>
+                                            </p>
+                                            <p class="city__details__row">
+                                                <span>Clouds</span><span>{this.state.weather.clouds}<small>%</small></span>
+                                            </p>
+                                        </div>
+                                }
                             </div>
-                            <div className="city__temp">
-                                <b className="city__temp--current">{this.state.weather.temp}°C</b>
-                                <small className="city__temp--range">Min. {this.state.weather.temp_min}°C Max. {this.state.weather.temp_max}°C</small>
+                            <div className="city__column">
+                                <img src="https://picsum.photos/170" className="city__image" />
                             </div>
                         </div>            
                 }               
