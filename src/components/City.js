@@ -52,7 +52,7 @@ export default class City extends Component {
                     weather: {
                         name: response.data.weather[0].main,
                         description: response.data.weather[0].description,
-                        icon: response.data.weather[0].icon,
+                        icon: `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
                         temp: response.data.main.temp,
                         temp_min: response.data.main.temp_min,
                         temp_max: response.data.main.temp_max,
@@ -88,20 +88,20 @@ export default class City extends Component {
                                 {!this.state.details
                                     ?   <button className="btn btn--large btn--details" onClick={e => this.setState({ details: true })}>Show details</button>
                                     :   <div className="city__details">
-                                            <p class="city__details__row">
+                                            <p className="city__details__row">
                                                 <span>Pressure</span><span>{this.state.weather.pressure}<small>hPa</small></span>
                                             </p>
-                                            <p class="city__details__row">
+                                            <p className="city__details__row">
                                                 <span>Humidity</span><span>{this.state.weather.humidity}<small>%</small></span>
                                             </p>
-                                            <p class="city__details__row">
+                                            <p className="city__details__row">
                                                 <span>Clouds</span><span>{this.state.weather.clouds}<small>%</small></span>
                                             </p>
                                         </div>
                                 }
                             </div>
                             <div className="city__column">
-                                <img src="https://picsum.photos/170" className="city__image" />
+                                <img src={this.state.weather.icon} className="city__image" alt="" />
                             </div>
                         </div>            
                 }               
