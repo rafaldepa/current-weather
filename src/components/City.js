@@ -24,7 +24,7 @@ export default class City extends Component {
                 x: (data.cords) ? data.cords.x : undefined,
                 y: (data.cords) ? data.cords.y : undefined
             },
-            key: 'a8ae92c824cd6654864bb1ee6c903c23'
+            key: process.env.REACT_APP_OWM_KEY
         }
 
         switch(type) {
