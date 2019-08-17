@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'; 
 import axios from 'axios';
 import Loading from './Loading';
 
@@ -10,7 +11,7 @@ export default class City extends Component {
             city: props.city,
             weather: undefined,
             fetched: false,
-            processing: true,
+            error: false,
             details: false
         }
     }
@@ -35,6 +36,10 @@ export default class City extends Component {
             default:
                 return false;
         }
+    }
+
+    formatString = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
     getWeather = () => {
@@ -66,45 +71,61 @@ export default class City extends Component {
             }
         })
         .catch(function(error) {
-            console.log(error);
+            self.setState({
+                error: error.response.data.message
+            })
         }) 
     }
 
-    componentWillMount = () =>{
+    showWeather = (fetched) => {
+        if(fetched) {
+            return(            
+                <div className="city__content">
+                    <div className="city__back"><Link to="/">&laquo; go back to search</Link></div>
+                    <div className="city__column">
+                        <h1 className="city__name">{this.state.city}</h1>
+                        <div className="city__weather">
+                            <p><span className="city__weather--temp">{this.state.weather.temp}°C</span><span className="city__weather--name">{this.state.weather.name}</span><span className="city__weather--description">({this.state.weather.description})</span></p>
+                        </div>
+                        {!this.state.details
+                            ?   <button className="btn btn--large btn--details" onClick={e => this.setState({ details: true })}>Show details</button>
+                            :   <div className="city__details">
+                                    <p className="city__details__row">
+                                        <span>Pressure</span><span>{this.state.weather.pressure}<small>hPa</small></span>
+                                    </p>
+                                    <p className="city__details__row">
+                                        <span>Humidity</span><span>{this.state.weather.humidity}<small>%</small></span>
+                                    </p>
+                                    <p className="city__details__row">
+                                        <span>Clouds</span><span>{this.state.weather.clouds}<small>%</small></span>
+                                    </p>
+                                </div>
+                        }
+                    </div>
+                    <div className="city__column">
+                        <img src={this.state.weather.icon} className="city__image" alt="" />
+                    </div>
+                </div>      
+            )
+        } else {
+            return(<div className="city__loading"><Loading /></div>)
+        }        
+    }
+
+    componentDidMount = () =>{
         this.getWeather();
     }
 
     render() {
         return(
             <div className="city">
-                {!this.state.fetched
-                    ?   <div className="city__loading"><Loading /></div>
-                    :   <div className="city__content">
-                            <div className="city__column">
-                                <h1 className="city__name">{this.state.city}</h1>
-                                <div className="city__weather">
-                                    <p><span className="city__weather--temp">{this.state.weather.temp}°C</span><span className="city__weather--name">{this.state.weather.name}</span><span className="city__weather--description">({this.state.weather.description})</span></p>
-                                </div>
-                                {!this.state.details
-                                    ?   <button className="btn btn--large btn--details" onClick={e => this.setState({ details: true })}>Show details</button>
-                                    :   <div className="city__details">
-                                            <p className="city__details__row">
-                                                <span>Pressure</span><span>{this.state.weather.pressure}<small>hPa</small></span>
-                                            </p>
-                                            <p className="city__details__row">
-                                                <span>Humidity</span><span>{this.state.weather.humidity}<small>%</small></span>
-                                            </p>
-                                            <p className="city__details__row">
-                                                <span>Clouds</span><span>{this.state.weather.clouds}<small>%</small></span>
-                                            </p>
-                                        </div>
-                                }
-                            </div>
-                            <div className="city__column">
-                                <img src={this.state.weather.icon} className="city__image" alt="" />
-                            </div>
-                        </div>            
-                }               
+                {this.state.error
+                    ?   <div className="city__error">
+                            <h2>{this.formatString(this.state.error)}</h2>
+                            <button className="btn" onClick={e => this.props.history.push('/')}>Try another city</button>
+                        </div>
+                    :   this.showWeather(this.state.fetched)
+                }                 
             </div>
         )
     }

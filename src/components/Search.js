@@ -41,14 +41,14 @@ export default class Search extends Component {
                         return errors;
                     }}
                     render={({ values, errors, status, touched }) => (
-                        <Form className="search__form form">
+                        <Form className="search__form form">                            
                             <label className="form__label">
                                 <Field name="city" type="text" placeholder="ex. New York" className={'form__input' + (errors.city && touched.city ? ' form__input--invalid' : '')} />
-                                <ErrorMessage name="city" component="div" className="invalid-feedback" />
                             </label>                            
                             <label className="form__label">
                                 <button type="submit" className="form__btn btn btn--search"></button>
                             </label>
+                            <label className="form__error"><ErrorMessage name="city" component="div" className="invalid-feedback" /></label>
                         </Form>
                     )}
                 />

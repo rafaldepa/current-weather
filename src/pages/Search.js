@@ -11,10 +11,11 @@ export default class SearchPage extends Component {
 
     render() {
         return(
-            <section className="search">
+            <section className="app__search">
                 <Helmet>
-                    <title>Search</title>                    
+                    <title>Check the current weather in any city</title>                    
                 </Helmet>
+                <div className="app__header"><h2>Check the current weather in any city</h2></div>
                 <Search {...this.props} />
             </section>
         )

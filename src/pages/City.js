@@ -12,11 +12,11 @@ export default class CityPage extends Component {
     }
     render() {
         return(
-            <section className="search">
+            <section className="app__city">
                 <Helmet>
-                    <title>City - {this.state.city.toUpperCase()}</title>                    
+                    <title>The current weather in {this.state.city.toUpperCase()}</title>                    
                 </Helmet>
-                <City {...this.state} />
+                <City {...this.state} {...this.props} />
             </section>
         )
     }
